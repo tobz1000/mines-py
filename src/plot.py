@@ -18,7 +18,6 @@ import matplotlib.pyplot as pyplot
 import progressbar # github.com/coagulant/progressbar-python3
 
 from guess_ais import *
-from server_json_wrapper import JSONServerWrapper
 
 REPEATS_PER_CONFIG = 50
 DIMS_LEN = 6
