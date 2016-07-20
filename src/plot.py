@@ -18,8 +18,9 @@ import matplotlib.pyplot as pyplot
 import progressbar # github.com/coagulant/progressbar-python3
 
 from guess_ais import *
+from server_json_wrapper import JSONServerWrapper
 
-REPEATS_PER_CONFIG = 50
+REPEATS_PER_CONFIG = 300
 DIMS_LEN = 6
 NUM_DIMS = 2
 SEEDS_SEED = 7
@@ -27,7 +28,7 @@ MINES_MIN = 1
 MINES_MAX = (DIMS_LEN ** NUM_DIMS) // 2
 
 # Reduce this when using very slow clients
-POOL_MAX_CHUNKSIZE = 100
+POOL_MAX_CHUNKSIZE = 10
 
 SERVER = PythonInternalServer
 
@@ -41,7 +42,7 @@ plot_clients = [
 	("green", ReactiveClientCheckShared),
 	#("red", ReactiveClientGuess),
 	#("cyan", ReactiveClientGuessAny),
-	#("orange", ReactiveClientAvgEmptiesBalanced),
+	("orange", ReactiveClientAvgEmptiesBalanced),
 	#("purple", ReactiveClientExhaustiveTest),
 	#("pink", ReactiveClientExhaustiveSplit),
 ]
