@@ -19,7 +19,7 @@ def run_game_config(
 
 def str_to_class(obj):
 	"""Get class types from strings for the client/server parameters"""
-	for param in [ "client", "server" ]:
+	for param in "client", "server":
 		if(param in obj and type(obj[param]) is str):
 			obj[param] = globals()[obj[param]]
 	return obj

@@ -40,16 +40,15 @@ class JSONServerWrapper(object):
 		self.reload_id = reload_id
 
 		if(dims is not None and mines is not None):
-			resp = self.action({
-				"action": "newGame",
+			resp = self.action("new", {
 				"dims": dims,
 				"mines": mines
 			})
-		elif(reload_id is not None):
-			resp = self.action({
-				"action": "loadGame",
-				"id": reload_id
-			})
+		#elif(reload_id is not None):
+		#	resp = self.action({
+		#		"action": "loadGame",
+		#		"id": reload_id
+		#	})
 		else:
 			raise Exception("Insufficient game parameters")
 
@@ -58,20 +57,19 @@ class JSONServerWrapper(object):
 		self.mines = resp["mines"]
 
 	def clear_cells(self, coords_list, debug=None):
-		return self.action({
-			"action": "clearCells",
-			"coords": coords_list,
+		return self.action("turn", {
+			"clear": coords_list,
 			"debug" : debug
-		})["newCellData"]
+		})["clearActual"]
 
-	def action(self, params):
+	def action(self, action, params):
 		params["id"] = self.id
 		params["pass"] = self.password
 
 		# TODO: error handling, both from "error" JSON and other server
 		# response/no server response
 		resp = json.loads(requests.post(
-			SERVER_ADDR + "/action",
+			SERVER_ADDR + "/server/" + action,
 			data=json.dumps(params, cls=Encoder)
 		).text)
 
