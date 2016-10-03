@@ -82,9 +82,9 @@ class PythonInternalServer(object):
 		numpy.random.shuffle(grid.ravel())
 		return grid
 
-	def clear_cells(self, coords_list, debug=None):
+	def turn(self, clear=[], flag=[], debug=None, client=None):
 		cleared_cells = []
-		for coords in coords_list:
+		for coords in clear:
 			if self.game_grid[coords] == MINE:
 				self.game_over = True
 				return []
@@ -102,7 +102,7 @@ class PythonInternalServer(object):
 				})
 
 		# Result already returned if game is lost
-		self.cells_rem -= len(coords_list)
+		self.cells_rem -= len(clear)
 		if self.cells_rem == 0:
 			self.win = True
 			self.game_over = True

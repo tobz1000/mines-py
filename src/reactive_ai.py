@@ -145,9 +145,9 @@ class ReactiveClient(object):
 		log(3, "Clearing... ", end='', flush=True)
 		self.game_grid[first_coords].state = State.TO_CLEAR
 		while True:
-			self.clear_cells()
+			self.turn()
 
-	def clear_cells(self):
+	def turn(self):
 		if not any(self.known_cells[State.TO_CLEAR]):
 			guess_cell = self.get_guess_cell()
 
@@ -167,9 +167,10 @@ class ReactiveClient(object):
 		self.turns_hash_sum += hash(to_clear)
 
 		wait_start = time.time()
-		new_cells = self.server.clear_cells(
+		new_cells = self.server.turn(
 			clear=to_clear,
 			flag=to_flag,
+			client=self.__class__.__name__,
 			debug={
 				"gameInfo" : "game info here",
 				"cellInfo" : self.game_cells_debug()
