@@ -66,7 +66,7 @@ class ReactiveClient(object):
 	wait_time = None
 
 	# Types of cell to track in reverse-lookup dicts
-	cell_state_lookups = [ State.TO_CLEAR, State.EMPTY ]
+	cell_state_lookups = [ State.TO_CLEAR, State.EMPTY, State.MINE ]
 
 	def __init__(self, server, first_coords=None):
 		self.server = server
@@ -157,16 +157,20 @@ class ReactiveClient(object):
 			log(2, "(?)", end='', flush=True)
 			guess_cell.state = State.TO_CLEAR
 
-		coords_list = tuple(c.coords for c in self.known_cells[State.TO_CLEAR])
+		to_clear, to_flag = (
+			tuple(c.coords for c in self.known_cells[state])
+			for state in (State.TO_CLEAR, State.MINE)
+		)
 
-		log(2, "{}".format(len(coords_list)), end='', flush=True)
+		log(2, "{}".format(len(to_clear)), end='', flush=True)
 
-		self.turns_hash_sum += hash(coords_list)
+		self.turns_hash_sum += hash(to_clear)
 
 		wait_start = time.time()
 		new_cells = self.server.clear_cells(
-			coords_list,
-			{
+			clear=to_clear,
+			flag=to_flag,
+			debug={
 				"gameInfo" : "game info here",
 				"cellInfo" : self.game_cells_debug()
 			}

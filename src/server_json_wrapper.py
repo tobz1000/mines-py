@@ -56,10 +56,11 @@ class JSONServerWrapper(object):
 		self.dims = resp["dims"]
 		self.mines = resp["mines"]
 
-	def clear_cells(self, coords_list, debug=None):
+	def clear_cells(self, clear=[], flag=[], debug=None):
 		return self.action("turn", {
-			"clear": coords_list,
-			"debug" : debug
+			"clear": clear,
+			"flag": flag,
+			"debug": debug
 		})["clearActual"]
 
 	def action(self, action, params):
