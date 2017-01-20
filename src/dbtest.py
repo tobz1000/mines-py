@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.4
+#!/usr/bin/env python3
 
 # Test speed of different db solutions for storing/fetching game state info.
 
