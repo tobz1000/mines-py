@@ -15,6 +15,7 @@ if sys.prefix != os.path.realpath(venv_path):
 	)
 	sys.exit()
 
+# TODO: this don't work quite right.
 def installed(package):
 	return bool(importlib.util.find_spec(package))
 
